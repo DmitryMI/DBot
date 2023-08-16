@@ -10,6 +10,7 @@ class DBotConfig:
         self.downloads_dir = "Downloads"
         self.command_prefix = "$"
         self.intents = discord.Intents.default()
+        self.streaming_only = False
 
 class DBotClient(commands.Bot):
 
