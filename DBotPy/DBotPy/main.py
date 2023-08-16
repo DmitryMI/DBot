@@ -61,7 +61,7 @@ async def main():
         with open(token_file_path, 'r') as fin:
             api_token = fin.read()
     
-    bot = create_bot()
+    bot = await create_bot()
 
     async with bot:
         await bot.start(api_token)
