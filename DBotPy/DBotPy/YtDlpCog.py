@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import YtDlpSource
+import logging
 
 class YtDlpCog(commands.Cog):
     def __init__(self, bot):
@@ -16,22 +17,15 @@ class YtDlpCog(commands.Cog):
         await channel.connect()
 
     @commands.command()
-    async def play(self, ctx, *, query):
-        """Plays a file from the local filesystem"""
-
-        source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(query))
-        ctx.voice_client.play(source, after=lambda e: print(f'Player error: {e}') if e else None)
-
-        await ctx.send(f'Now playing: {query}')
-
-    @commands.command()
-    async def yt(self, ctx, *, url):
-        """Plays from a url (almost anything youtube_dl supports)"""
+    async def play(self, ctx : commands.Context, *, url):
+        """Plays from a url"""
 
         async with ctx.typing():
             player = await YtDlpSource.YtDlpSource.from_url(url, loop=self.bot.loop)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
+        channel = ctx.channel
+        logging.info(f"Command <play> invoked in channel {channel.id}")
         await ctx.send(f'Now playing: {player.title}')
 
     @commands.command()
@@ -61,8 +55,6 @@ class YtDlpCog(commands.Cog):
         await ctx.voice_client.disconnect()
 
     @play.before_invoke
-    @yt.before_invoke
-    @stream.before_invoke
     async def ensure_voice(self, ctx):
         if ctx.voice_client is None:
             if ctx.author.voice:

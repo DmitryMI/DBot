@@ -5,7 +5,7 @@ import os.path
 import logging
 import logging.handlers
 import asyncio
-from DBotClient import DBotClient, create_bot
+from DBotClient import DBotClient, create_bot, DBotConfig
 
 def configure_logging(logs_dir="logs", log_level = logging.INFO):
     log_file = os.path.join(logs_dir, "dbot.log")
@@ -47,7 +47,7 @@ async def main():
     parser.add_argument("--prefix", help="Commands prefix", default="$")
     parser.add_argument("--log_dir", help= "Directory for log files")
     parser.add_argument("--downloads_dir", help = "Directory for downloads", default = "downloads")
-    parser.add_argument("--downloads_max_size", help = "Downloads folder max size in Mb", default = 1024)
+    parser.add_argument("--downloads_max_size", help = "Downloads folder max size in Mb", default = 32)
     #parser.add_argument('-v', '--verbose', action='store_true')  # on/off flag
 
     args = parser.parse_args()
@@ -66,7 +66,11 @@ async def main():
         with open(token_file_path, 'r') as fin:
             api_token = fin.read()
     
-    bot = await create_bot(args.prefix)
+    bot_config = DBotConfig()
+    bot_config.command_prefix = args.prefix
+    bot_config.downloads_dir = args.downloads_dir
+    bot_config.downloads_max_size = args.downloads_max_size
+    bot = await create_bot(bot_config)
 
     async with bot:
         await bot.start(api_token)

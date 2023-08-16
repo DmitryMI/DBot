@@ -4,7 +4,18 @@ import random
 import logging
 import YtDlpCog
 
+class DBotConfig:
+    def __init__(self):
+        self.downloads_max_size = 32 * 1024 * 1024
+        self.downloads_dir = "Downloads"
+        self.command_prefix = "$"
+        self.intents = discord.Intents.default()
+
 class DBotClient(commands.Bot):
+
+    def __init__(self, config: DBotConfig):
+        super().__init__(command_prefix=commands.when_mentioned_or(config.command_prefix), intents=config.intents)
+        self.config = config
 
     async def on_ready(self):
         logging.info(f'Logged on as {self.user}')
@@ -20,11 +31,10 @@ async def add(ctx, left: int, right: int):
     """Adds two numbers together."""
     await ctx.send(left + right)
 
-async def create_bot(command_prefix):
-    intents = discord.Intents.default()
-    intents.message_content = True
+async def create_bot(config : DBotConfig):
+    config.intents.message_content = True
 
-    bot = DBotClient(command_prefix=commands.when_mentioned_or(command_prefix), intents=intents)
+    bot = DBotClient(config)
 
     bot.add_command(add)
     await bot.add_cog(YtDlpCog.YtDlpCog(bot))
