@@ -45,6 +45,9 @@ async def main():
     group.add_argument('--token_file', help="API Token for the bot stored in a text file. The token must be kept in secret!")
 
     parser.add_argument("--prefix", help="Commands prefix", default="$")
+    parser.add_argument("--log_dir", help= "Directory for log files")
+    parser.add_argument("--downloads_dir", help = "Directory for downloads", default = "downloads")
+    parser.add_argument("--downloads_max_size", help = "Downloads folder max size in Mb", default = 1024)
     #parser.add_argument('-v', '--verbose', action='store_true')  # on/off flag
 
     args = parser.parse_args()
