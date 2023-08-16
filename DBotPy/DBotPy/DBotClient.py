@@ -20,11 +20,11 @@ async def add(ctx, left: int, right: int):
     """Adds two numbers together."""
     await ctx.send(left + right)
 
-async def create_bot():
+async def create_bot(command_prefix):
     intents = discord.Intents.default()
     intents.message_content = True
 
-    bot = DBotClient(command_prefix=commands.when_mentioned_or("!"), intents=intents)
+    bot = DBotClient(command_prefix=commands.when_mentioned_or(command_prefix), intents=intents)
 
     bot.add_command(add)
     await bot.add_cog(YtDlpCog.YtDlpCog(bot))

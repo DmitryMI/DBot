@@ -43,6 +43,8 @@ async def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--token', help="API Token for the bot. Must be kept in secret!")
     group.add_argument('--token_file', help="API Token for the bot stored in a text file. The token must be kept in secret!")
+
+    parser.add_argument("--prefix", help="Commands prefix", default="$")
     #parser.add_argument('-v', '--verbose', action='store_true')  # on/off flag
 
     args = parser.parse_args()
@@ -61,7 +63,7 @@ async def main():
         with open(token_file_path, 'r') as fin:
             api_token = fin.read()
     
-    bot = await create_bot()
+    bot = await create_bot(args.prefix)
 
     async with bot:
         await bot.start(api_token)
