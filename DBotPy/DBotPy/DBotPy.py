@@ -4,6 +4,7 @@ import os
 import os.path
 import logging
 import logging.handlers
+from DBotClient import DBotClient, create_bot
 
 def configure_logging(logs_dir="logs", log_level = logging.INFO):
     log_file = os.path.join(logs_dir, "dbot.log")
@@ -24,7 +25,6 @@ def configure_logging(logs_dir="logs", log_level = logging.INFO):
     logger_default.setLevel(log_level)
     logger_default.addHandler(handler_rotating)
     logger_default.addHandler(handler_console)
-
 
 
 def main():
@@ -55,12 +55,8 @@ def main():
         with open(token_file_path, 'r') as fin:
             api_token = fin.read()
     
-    intents = discord.Intents.default()
-    intents.message_content = True
-
-    client = discord.Client(intents=intents)
-
-    client.run(api_token)
+    bot = create_bot()
+    bot.run(api_token, log_handler=None)
 
 if __name__ == "__main__":
     main()
