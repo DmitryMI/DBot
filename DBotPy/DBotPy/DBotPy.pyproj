@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4034cc8a-9c88-4cd0-bdbd-7815400f5bb3</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>DBotPy.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -26,7 +26,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DBotClient.py" />
-    <Compile Include="DBotPy.py" />
+    <Compile Include="main.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.11" />

@@ -4,6 +4,7 @@ import os
 import os.path
 import logging
 import logging.handlers
+import asyncio
 from DBotClient import DBotClient, create_bot
 
 def configure_logging(logs_dir="logs", log_level = logging.INFO):
@@ -12,13 +13,18 @@ def configure_logging(logs_dir="logs", log_level = logging.INFO):
     if not os.path.exists(logs_dir):
         os.makedirs(logs_dir)
 
+    dt_fmt = '%Y-%m-%d %H:%M:%S'
+    formatter = logging.Formatter('[{asctime}] [{levelname:<8}] {name}: {message}', dt_fmt, style='{')
+
     handler_console = logging.StreamHandler()
+    handler_console.setFormatter(formatter)
     handler_rotating = logging.handlers.RotatingFileHandler(
         filename=log_file,
         encoding='utf-8',
         maxBytes=32 * 1024 * 1024,  # 32 MiB
         backupCount=5,  # Rotate through 5 files
     )
+    handler_rotating.setFormatter(formatter)
 
     # Setup default logger
     logger_default = logging.getLogger()
@@ -27,7 +33,7 @@ def configure_logging(logs_dir="logs", log_level = logging.INFO):
     logger_default.addHandler(handler_console)
 
 
-def main():
+async def main():
     parser = argparse.ArgumentParser(
                     prog='DBot',
                     description='Discord Bot for playing meme sounds',
@@ -56,7 +62,9 @@ def main():
             api_token = fin.read()
     
     bot = create_bot()
-    bot.run(api_token, log_handler=None)
+
+    async with bot:
+        await bot.start(api_token)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
