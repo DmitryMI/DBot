@@ -12,17 +12,9 @@ class YtDlpCog(commands.Cog):
         self.playing_source_map = ContextMap()
         self.background_tasks = set()
 
-    @commands.command()
-    async def join(self, ctx, *, channel: discord.VoiceChannel):
-        """Joins a voice channel"""
-
-        if ctx.voice_client is not None:
-            return await ctx.voice_client.move_to(channel)
-
-        await channel.connect()
 
     @commands.command()
-    async def play(self, ctx : commands.Context, *, url):
+    async def music_play(self, ctx : commands.Context, *, url):
         """Plays from a url"""
 
         async with ctx.typing():
@@ -32,6 +24,7 @@ class YtDlpCog(commands.Cog):
                 ctx.send(f'Playlist cleared. Use enqueue command to add to the playlist.')
 
             await self.play_internal(ctx, url)
+
 
     async def play_internal(self, ctx: commands.Context, url):
         await self.ensure_voice(ctx)
@@ -52,7 +45,7 @@ class YtDlpCog(commands.Cog):
                 await ctx.send(f"{i}: {url}")
 
     @commands.command()
-    async def next(self, ctx : commands.Context):
+    async def music_next(self, ctx : commands.Context):
 
         # async with ctx.typing():
         if ctx.voice_client.is_playing():
@@ -86,7 +79,7 @@ class YtDlpCog(commands.Cog):
             await ctx.send("Playlist finished!")
 
     @commands.command()
-    async def enqueue(self, ctx : commands.Context, *, url):
+    async def music_enqueue(self, ctx : commands.Context, *, url):
         """Adds url to a playlist"""
 
         playing_now = None
@@ -142,23 +135,13 @@ class YtDlpCog(commands.Cog):
 
 
     @commands.command()
-    async def volume(self, ctx, volume: int):
-        """Changes the player's volume"""
-
-        if ctx.voice_client is None:
-            return await ctx.send("Not connected to a voice channel.")
-
-        ctx.voice_client.source.volume = volume / 100
-        await ctx.send(f"Changed volume to {volume}%")
-
-    @commands.command()
-    async def stop(self, ctx):
+    async def music_stop(self, ctx):
         """Stops and disconnects the bot from voice"""
 
         await ctx.voice_client.disconnect()
 
-    @play.before_invoke
-    @enqueue.before_invoke
+    @music_play.before_invoke
+    @music_enqueue.before_invoke
     async def ensure_voice(self, ctx):
         if ctx.voice_client is None:
             if ctx.author.voice:

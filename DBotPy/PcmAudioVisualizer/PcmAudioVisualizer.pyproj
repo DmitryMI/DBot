@@ -2,18 +2,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>4034cc8a-9c88-4cd0-bdbd-7815400f5bb3</ProjectGuid>
+    <ProjectGuid>9539390f-cc65-4263-b80c-7cbbc3676f64</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>PcmAudioVisualizer.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>DBotPy</Name>
-    <RootNamespace>DBotPy</RootNamespace>
-    <InterpreterId>Global|PythonCore|3.11</InterpreterId>
+    <Name>PcmAudioVisualizer</Name>
+    <RootNamespace>PcmAudioVisualizer</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>--token_file "C:\Users\DmitriyPC\Documents\MEGA\Документы\discord_bot_token.txt"</CommandLineArguments>
+    <CommandLineArguments>C:\Users\DmitriyPC\Documents\GitHub\DBot\DBotPy\DBotPy\Recordings\368683701950873603.pcm</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -25,20 +24,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CommonCog.py" />
-    <Compile Include="ContextMap.py" />
-    <Compile Include="DBotClient.py" />
-    <Compile Include="main.py" />
-    <Compile Include="Whistle\WhistleSilencerCog.py" />
-    <Compile Include="Whistle\WhistlingDetectingSink.py" />
-    <Compile Include="YtDlpCog.py" />
-    <Compile Include="YtDlpSource.py" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="Global|PythonCore|3.11" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Whistle\" />
+    <Compile Include="PcmAudioVisualizer.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

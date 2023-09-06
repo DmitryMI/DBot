@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import random
 import logging
+import Whistle.WhistleSilencerCog
 import YtDlpCog
 
 class DBotConfig:
@@ -38,6 +39,7 @@ async def create_bot(config : DBotConfig):
     bot = DBotClient(config)
 
     bot.add_command(add)
-    await bot.add_cog(YtDlpCog.YtDlpCog(bot))
+    bot.add_cog(YtDlpCog.YtDlpCog(bot))
+    bot.add_cog(Whistle.WhistleSilencerCog.WhistleSilencerCog(bot))
 
     return bot

@@ -1,3 +1,4 @@
+from threading import Thread
 import discord
 import argparse
 import os
@@ -6,6 +7,9 @@ import logging
 import logging.handlers
 import asyncio
 from DBotClient import DBotClient, create_bot, DBotConfig
+from matplotlib import pyplot as plt
+
+background_tasks = []
 
 def configure_logging(logs_dir="logs", log_level = logging.INFO):
     log_file = os.path.join(logs_dir, "dbot.log")
@@ -32,6 +36,11 @@ def configure_logging(logs_dir="logs", log_level = logging.INFO):
     logger_default.addHandler(handler_rotating)
     logger_default.addHandler(handler_console)
 
+async def plot_loop():
+    while True:
+        plt.draw()
+        plt.pause(0.001)
+        await asyncio.sleep(1)
 
 async def main():
     parser = argparse.ArgumentParser(
@@ -73,8 +82,15 @@ async def main():
     bot_config.streaming_only = args.streaming_only
     bot = await create_bot(bot_config)
 
-    async with bot:
-        await bot.start(api_token)
+    bot_task = asyncio.create_task(bot.start(api_token))
+    # await bot.start(api_token)
+    background_tasks.append(bot_task)
+
+    # plot_task = asyncio.create_task(plot_loop())
+    # background_tasks.append(plot_task)
+
+    await bot_task
 
 if __name__ == "__main__":
+
     asyncio.run(main())

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "DBotPy", "DBotPy\DBotPy.pyproj", "{4034CC8A-9C88-4CD0-BDBD-7815400F5BB3}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PcmAudioVisualizer", "PcmAudioVisualizer\PcmAudioVisualizer.pyproj", "{9539390F-CC65-4263-B80C-7CBBC3676F64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4034CC8A-9C88-4CD0-BDBD-7815400F5BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4034CC8A-9C88-4CD0-BDBD-7815400F5BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9539390F-CC65-4263-B80C-7CBBC3676F64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9539390F-CC65-4263-B80C-7CBBC3676F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
