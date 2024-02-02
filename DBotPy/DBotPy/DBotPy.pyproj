@@ -13,7 +13,7 @@
     <RootNamespace>DBotPy</RootNamespace>
     <InterpreterId>Global|PythonCore|3.11</InterpreterId>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>--token_file "C:\Users\DmitriyPC\Documents\MEGA\Документы\discord_bot_token.txt"</CommandLineArguments>
+    <CommandLineArguments>--token_file "C:\Users\DmitriyPC\Documents\MEGA\Документы\discord_bot_token.txt" --prisoner_role "Фашист" --prison_channel "Помоечка" --admin_usernames dmitriymi levanfas --announcement_pattern "Фашистская морда {}, скажи {}" --announcement_language="ru"</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -29,6 +29,8 @@
     <Compile Include="ContextMap.py" />
     <Compile Include="DBotClient.py" />
     <Compile Include="main.py" />
+    <Compile Include="Punishment\PunishmentCog.py" />
+    <Compile Include="SpeechRecognitionSink.py" />
     <Compile Include="Whistle\WhistleSilencerCog.py" />
     <Compile Include="Whistle\WhistlingDetectingSink.py" />
     <Compile Include="YtDlpCog.py" />
@@ -38,6 +40,7 @@
     <InterpreterReference Include="Global|PythonCore|3.11" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Punishment\" />
     <Folder Include="Whistle\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

@@ -7,7 +7,6 @@ import logging
 import logging.handlers
 import asyncio
 from DBotClient import DBotClient, create_bot, DBotConfig
-from matplotlib import pyplot as plt
 
 background_tasks = []
 
@@ -36,11 +35,6 @@ def configure_logging(logs_dir="logs", log_level = logging.INFO):
     logger_default.addHandler(handler_rotating)
     logger_default.addHandler(handler_console)
 
-async def plot_loop():
-    while True:
-        plt.draw()
-        plt.pause(0.001)
-        await asyncio.sleep(1)
 
 async def main():
     parser = argparse.ArgumentParser(
@@ -58,6 +52,12 @@ async def main():
     parser.add_argument("--downloads_dir", help = "Directory for downloads", default = "downloads")
     parser.add_argument("--downloads_max_size", help = "Downloads folder max size in Mb", default = 32)
     parser.add_argument('--streaming_only', help="Do not save audio to the disk, stream directly into Discord instead", action='store_true')  # on/off flag
+    parser.add_argument("--prison_channel", help="Prison channel name", default="Prison")
+    parser.add_argument("--prisoner_role", help="Prisoner role name", default="Prisoner")
+    parser.add_argument("--admin_roles", help="Admin role name", nargs="*")
+    parser.add_argument("--admin_usernames", help="Admin nickname", nargs="*")
+    parser.add_argument("--announcement_pattern", help="Announcement pattern for imprisonment", type=str, default="{}, say {}")
+    parser.add_argument("--announcement_language", help="Announcement language for imprisonment", type=str, default="en")
 
     args = parser.parse_args()
 
@@ -80,6 +80,13 @@ async def main():
     bot_config.downloads_dir = args.downloads_dir
     bot_config.downloads_max_size = args.downloads_max_size
     bot_config.streaming_only = args.streaming_only
+    bot_config.prisoner_role_name = args.prisoner_role
+    bot_config.prison_channel_name = args.prison_channel
+    bot_config.admin_roles = args.admin_roles
+    bot_config.admin_usernames = args.admin_usernames
+    bot_config.announcement_pattern = args.announcement_pattern
+    bot_config.announcement_language = args.announcement_language
+
     bot = await create_bot(bot_config)
 
     bot_task = asyncio.create_task(bot.start(api_token))

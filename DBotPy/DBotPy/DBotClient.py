@@ -3,6 +3,7 @@ from discord.ext import commands
 import random
 import logging
 import Whistle.WhistleSilencerCog
+import Punishment.PunishmentCog
 import YtDlpCog
 
 class DBotConfig:
@@ -11,7 +12,19 @@ class DBotConfig:
         self.downloads_dir = "Downloads"
         self.command_prefix = "$"
         self.intents = discord.Intents.default()
+
+        self.intents.members = True
+
         self.streaming_only = False
+
+        self.prison_channel_name = "Prison"
+        self.prisoner_role_name = "Prisoner"
+        self.whisper_language = "Russian"
+
+        self.admin_roles = []
+        self.admin_usernames = []
+        self.announcement_pattern = "{}"
+        self.announcement_language = "en"
 
 class DBotClient(commands.Bot):
 
@@ -41,5 +54,17 @@ async def create_bot(config : DBotConfig):
     bot.add_command(add)
     bot.add_cog(YtDlpCog.YtDlpCog(bot))
     bot.add_cog(Whistle.WhistleSilencerCog.WhistleSilencerCog(bot))
+    bot.add_cog(
+        Punishment.PunishmentCog.PunishmentCog(
+            bot, 
+            config.prisoner_role_name, 
+            config.prison_channel_name, 
+            config.whisper_language,
+            config.admin_roles,
+            config.admin_usernames,
+            config.announcement_pattern,
+            config.announcement_language
+            )
+        )
 
     return bot
